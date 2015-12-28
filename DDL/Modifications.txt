@@ -1,0 +1,13 @@
+create table CleanRooms(
+	id int primary key,
+	Number int,
+	RoomId int not null,
+	EmployeeId int not null,
+	CleanDate date
+);
+
+
+alter table CleanRooms add constraint CLRooms_to_Room
+	foreign key (RoomId) references Rooms(id);
+alter table CleanRooms add constraint CLRooms_to_empl
+	foreign key (employeeid) references Employees(id);

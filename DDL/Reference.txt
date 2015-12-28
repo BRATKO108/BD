@@ -1,0 +1,44 @@
+connect 'C:\Users\Bocman\Documents\Database\Hotel.fdb' user 'SYSDBA' password 'masterkey';
+
+
+
+
+
+
+select first 15
+	CleanRooms.number,
+	Rooms.numberroom,
+	Employees.name,
+	CleanRooms.CleanDate
+from 
+	CleanRooms, 
+	Rooms, 
+	Employees
+where 
+	Rooms.id = CleanRooms.roomId 
+	and Employees.id = CleanRooms.EmployeeId
+-----------------------------------
+--учет уборок номеров сотрудниками
+-----------------------------------
+;
+
+select	Rooms.numberroom,
+	RoomConditions.InRoom,
+	RoomConditions.OutRoom,
+	Clients.name
+from 
+	RoomConditions, 
+	Clients, 
+	rooms 
+where   
+	Clients.id = RoomConditions.ClientID 
+	and Rooms.id = RoomConditions.RoomID 
+	and RoomConditions.StateArmor='F' 
+	and Rooms.numberroom= 522
+--------------------------------------------------------------------------
+--учет одновременного бронирования номера на разные даты разными клиентами
+--------------------------------------------------------------------------
+;
+
+
+

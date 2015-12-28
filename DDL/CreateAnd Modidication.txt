@@ -1,0 +1,98 @@
+create database 'C:\Users\Bocman\Documents\Database\Hotel.fdb' user 'SYSDBA' password 'masterkey';
+connect 'C:\Users\Bocman\Documents\Database\Hotel.fdb' user 'SYSDBA' password 'masterkey';
+
+
+create table Employees (
+    id int primary key,
+    Name varchar(100),
+    Birthday date,
+    Education varchar(30),
+    PostID int not null,
+    Adres varchar(40),
+    Phone varchar(20),
+    Salary int
+);
+
+create table Posts (
+    id int primary key,
+    Name varchar(50)
+);
+
+create table AddServices (
+    id int primary key,
+    Name varchar(50),
+    Cost int
+    
+);
+
+create table RoomConditions (
+    id int primary key,
+    Number int,
+    RoomID int not null,
+    InRoom date,
+    OutRoom date,
+    Cost int,
+    ClientID int not null,
+    StateArmor char(1)
+);
+
+create table Clients (
+    id int primary key,
+    Name varchar(100),
+    Birthday date,
+    Sex varchar(6),
+    Passport int
+    
+);
+
+create table AddServiceCondition (
+    id int primary key,
+    Number int,
+    AddServiceId int not null,
+    EmployeeID int not null,
+    StartAS date,
+    EndAS date,
+    ClientID int not null,
+    Cost int
+    
+);
+
+create table Categories (
+    id int primary key,
+    Name varchar(20),
+    NumBeds int,
+    DopInfo char(512),
+    Cost int
+    
+);
+
+create table Rooms (
+    id int primary key,
+    NumberRoom int,
+    CategoryID int not null
+);
+
+alter table AddServiceCondition add constraint ServCond_to_empl
+    foreign key (EmployeeID) references Employees(id);
+
+alter table AddServiceCondition add constraint ServCond_to_serv
+    foreign key (AddServiceId) references AddServices(id);
+
+alter table AddServiceCondition add constraint ServCond_to_client
+    foreign key (ClientID) references Clients(id);
+
+alter table Employees add constraint Employ_to_post
+    foreign key (PostID) references Posts(id);
+
+
+
+
+alter table RoomConditions add constraint Roomcond_to_room
+    foreign key (RoomID) references Rooms(id);
+
+alter table RoomConditions add constraint Roomcond_to_client
+    foreign key (ClientID) references Clients(id);
+
+alter table Rooms add constraint room_to_categ
+    foreign key (CategoryID) references Categories(id);
+
